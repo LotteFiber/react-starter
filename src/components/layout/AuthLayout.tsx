@@ -1,9 +1,27 @@
+import { GalleryVerticalEnd } from 'lucide-react';
 import { Outlet } from 'react-router';
 
 export function AuthLayout() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center h-screen mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <Outlet />
+    <div className="grid min-h-svh lg:grid-cols-2">
+      <div className="bg-muted relative hidden lg:block">
+        <img
+          src="/placeholder.svg"
+          alt="Image"
+          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+        />
+      </div>
+      <div className="flex flex-col gap-4 p-6 md:p-10">
+        <div className="flex justify-center gap-2 md:justify-end">
+          <a href="#" className="flex items-center gap-2 font-medium">
+            <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
+              <GalleryVerticalEnd className="size-4" />
+            </div>
+            Acme Inc.
+          </a>
+        </div>
+        <Outlet />
+      </div>
     </div>
   );
 }

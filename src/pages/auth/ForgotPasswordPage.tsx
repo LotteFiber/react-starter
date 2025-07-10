@@ -1,14 +1,13 @@
-import { Link } from 'react-router';
+import { ForgotPasswordForm } from '@/features/auth/ForgotPasswordForm';
 
-import { PATHS } from '@/routes/path';
-
-const ForgotPasswordPage = () => {
+const SignInPage = () => {
   return (
-    <div className="flex flex-col">
-      Forgot Password Page
-      <Link to={PATHS.signIn}>Back to Sign In</Link>
+    <div className="flex flex-1 items-center justify-center">
+      <div className="w-full max-w-xs">
+        <ForgotPasswordForm />
+      </div>
     </div>
   );
 };
 
-export default ForgotPasswordPage;
+export default SignInPage;
