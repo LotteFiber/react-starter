@@ -1,5 +1,3 @@
-// src/routes/router.tsx
-
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router';
 
 import { PATHS } from './path';
@@ -16,6 +14,7 @@ import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
 // Pages - App
 import DashboardPage from '@/pages/DashboardPage';
 import NotFoundPage from '@/pages/NotFoundPage';
+import { PrivateRoute } from '@/components/router/PrivateRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,8 +27,10 @@ const router = createBrowserRouter(
         <Route path={PATHS.forgotPassword} element={<ForgotPasswordPage />} />
       </Route>
       {/* App Routes */}
-      <Route element={<MainLayout />}>
-        <Route path={PATHS.dashboard} element={<DashboardPage />} />
+      <Route element={<PrivateRoute />}>
+        <Route element={<MainLayout />}>
+          <Route path={PATHS.dashboard} element={<DashboardPage />} />
+        </Route>
       </Route>
       {/* Fallback Route */}
       <Route path="*" element={<NotFoundPage />} />,

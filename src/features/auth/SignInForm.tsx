@@ -5,13 +5,16 @@ import { Link, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 import { cn } from '@/lib/utils';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PATHS } from '@/routes/path';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function SignInForm({ className, ...props }: React.ComponentProps<'form'>) {
   const navigate = useNavigate();
+  const { signin } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -24,6 +27,7 @@ export function SignInForm({ className, ...props }: React.ComponentProps<'form'>
       return;
     }
 
+    signin();
     toast.success('Successfully signed in!');
     navigate(PATHS.dashboard);
   };
