@@ -1,0 +1,22 @@
+# Build outputs
+dist
+build
+
+# Node modules
+node_modules
+
+# Vite cache
+.vite
+
+# ESLint and Prettier configs
+.eslint.config.js
+.prettierrc.json
+.prettierignore
+
+# Logs
+*.log
+
+# Misc
+coverage
+.env
+.env.* 
