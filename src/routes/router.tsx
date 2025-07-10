@@ -1,3 +1,5 @@
+import React, { lazy, Suspense } from 'react';
+
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router';
 
 import { PATHS } from './path';
@@ -7,13 +9,14 @@ import { AuthLayout } from '@/components/layout/AuthLayout';
 import MainLayout from '@/components/layout/MainLayout';
 
 // Pages - Auth
-import SignInPage from '@/pages/auth/SignInPage';
-import SignUpPage from '@/pages/auth/SignUpPage';
-import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
+const SignInPage = lazy(() => import('@/pages/auth/SignInPage'));
+const SignUpPage = lazy(() => import('@/pages/auth/SignUpPage'));
+const ForgotPasswordPage = lazy(() => import('@/pages/auth/ForgotPasswordPage'));
 
 // Pages - App
-import DashboardPage from '@/pages/DashboardPage';
-import NotFoundPage from '@/pages/NotFoundPage';
+const DashboardPage = lazy(() => import('@/pages/DashboardPage'));
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
+
 import { PrivateRoute } from '@/components/router/PrivateRoute';
 
 const router = createBrowserRouter(
@@ -39,5 +42,9 @@ const router = createBrowserRouter(
 );
 
 export function AppRouter() {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
