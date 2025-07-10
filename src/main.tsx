@@ -6,10 +6,13 @@ import './index.css';
 import { Toaster } from 'sonner';
 
 import { AppRouter } from './routes/router.tsx';
+import { ThemeProvider } from './components/theme-provider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AppRouter />
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <AppRouter />
+    </ThemeProvider>
     <Toaster />
   </StrictMode>,
 );
