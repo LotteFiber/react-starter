@@ -1,12 +1,11 @@
-import { Link } from 'react-router';
-
-import { PATHS } from '@/routes/path';
+import { SignUpForm } from '@/features/auth/SignUpForm';
 
 const SignUpPage = () => {
   return (
-    <div className="flex flex-col">
-      Sign Up Page
-      <Link to={PATHS.signIn}>Sign In</Link>
+    <div className="flex flex-1 items-center justify-center">
+      <div className="w-full max-w-xs">
+        <SignUpForm />
+      </div>
     </div>
   );
 };

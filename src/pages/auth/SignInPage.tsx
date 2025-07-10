@@ -1,17 +1,11 @@
-import { Link } from 'react-router';
-
-import { PATHS } from '@/routes/path';
-import { Button } from '@/components/ui/button';
+import { SignInForm } from '@/features/auth/SignInForm';
 
 const SignInPage = () => {
   return (
-    <div className="flex flex-col">
-      Sign In Page
-      <Link to={PATHS.forgotPassword}>Forgot Password?</Link>
-      <Link to={PATHS.signUp}>Sign Up</Link>
-      <Button>
-        <Link to={PATHS.dashboard}>Sign In</Link>
-      </Button>
+    <div className="flex flex-1 items-center justify-center">
+      <div className="w-full max-w-xs">
+        <SignInForm />
+      </div>
     </div>
   );
 };
