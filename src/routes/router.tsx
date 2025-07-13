@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 
-import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import { useMatches } from 'react-router';
 
@@ -24,64 +24,74 @@ import { PrivateRoute } from '@/components/router/PrivateRoute';
 import { PublicRoute } from '@/components/router/PublicRoute';
 import type { RouteHandle, RouteMeta } from '@/types/router';
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <>
-      {/* Public Routes */}
-      <Route element={<PublicRoute />}>
-        <Route element={<AuthLayout />}>
-          <Route
-            path={PATHS.root}
-            element={<SignInPage />}
-            handle={{ meta: { title: 'Sign In', breadcrumb: 'Sign In' } satisfies RouteMeta }}
-          />
-          <Route
-            path={PATHS.signIn}
-            element={<SignInPage />}
-            handle={{ meta: { title: 'Sign In', breadcrumb: 'Sign In' } satisfies RouteMeta }}
-          />
-          <Route
-            path={PATHS.signUp}
-            element={<SignUpPage />}
-            handle={{ meta: { title: 'Sign Up', breadcrumb: 'Sign Up' } satisfies RouteMeta }}
-          />
-          <Route
-            path={PATHS.forgotPassword}
-            element={<ForgotPasswordPage />}
-            handle={{
+const router = createBrowserRouter([
+  {
+    element: <PublicRoute />,
+    children: [
+      {
+        element: <AuthLayout />,
+        children: [
+          {
+            path: PATHS.root,
+            element: <SignInPage />,
+            handle: {
+              meta: { title: 'Sign In', breadcrumb: 'Sign In' } satisfies RouteMeta,
+            },
+          },
+          {
+            path: PATHS.signIn,
+            element: <SignInPage />,
+            handle: {
+              meta: { title: 'Sign In', breadcrumb: 'Sign In' } satisfies RouteMeta,
+            },
+          },
+          {
+            path: PATHS.signUp,
+            element: <SignUpPage />,
+            handle: {
+              meta: { title: 'Sign Up', breadcrumb: 'Sign Up' } satisfies RouteMeta,
+            },
+          },
+          {
+            path: PATHS.forgotPassword,
+            element: <ForgotPasswordPage />,
+            handle: {
               meta: { title: 'Forgot Password', breadcrumb: 'Forgot' } satisfies RouteMeta,
-            }}
-          />
-        </Route>
-      </Route>
-      {/* Private Routes */}
-      <Route element={<PrivateRoute />}>
-        <Route element={<MainLayout />}>
-          <Route
-            path={PATHS.dashboard}
-            element={<DashboardPage />}
-            handle={{
+            },
+          },
+        ],
+      },
+    ],
+  },
+  {
+    element: <PrivateRoute />,
+    children: [
+      {
+        element: <MainLayout />,
+        children: [
+          {
+            path: PATHS.dashboard,
+            element: <DashboardPage />,
+            handle: {
               meta: {
                 title: 'Dashboard',
                 breadcrumb: 'Home',
                 requiresAuth: true,
               } satisfies RouteMeta,
-            }}
-          />
-        </Route>
-      </Route>
-      {/* Fallback Route */}
-      <Route
-        path="*"
-        element={<NotFoundPage />}
-        handle={{
-          meta: { title: '404 Page NotFound', breadcrumb: '404 Page NotFound' } satisfies RouteMeta,
-        }}
-      />
-      ,
-    </>,
-  ),
-);
+            },
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
+    handle: {
+      meta: { title: '404 Page NotFound', breadcrumb: '404 Page NotFound' } satisfies RouteMeta,
+    },
+  },
+]);
 
 export const usePageMeta = () => {
   const matches = useMatches();
