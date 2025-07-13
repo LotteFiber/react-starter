@@ -2,6 +2,8 @@ import { lazy, Suspense } from 'react';
 
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router';
 
+import { useMatches } from 'react-router';
+
 import { PATHS } from './path';
 
 // Layouts
@@ -20,6 +22,7 @@ const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 // Route Guards
 import { PrivateRoute } from '@/components/router/PrivateRoute';
 import { PublicRoute } from '@/components/router/PublicRoute';
+import type { RouteHandle, RouteMeta } from '@/types/router';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,23 +30,68 @@ const router = createBrowserRouter(
       {/* Public Routes */}
       <Route element={<PublicRoute />}>
         <Route element={<AuthLayout />}>
-          <Route path={PATHS.root} element={<SignInPage />} />
-          <Route path={PATHS.signIn} element={<SignInPage />} />
-          <Route path={PATHS.signUp} element={<SignUpPage />} />
-          <Route path={PATHS.forgotPassword} element={<ForgotPasswordPage />} />
+          <Route
+            path={PATHS.root}
+            element={<SignInPage />}
+            handle={{ meta: { title: 'Sign In', breadcrumb: 'Sign In' } satisfies RouteMeta }}
+          />
+          <Route
+            path={PATHS.signIn}
+            element={<SignInPage />}
+            handle={{ meta: { title: 'Sign In', breadcrumb: 'Sign In' } satisfies RouteMeta }}
+          />
+          <Route
+            path={PATHS.signUp}
+            element={<SignUpPage />}
+            handle={{ meta: { title: 'Sign Up', breadcrumb: 'Sign Up' } satisfies RouteMeta }}
+          />
+          <Route
+            path={PATHS.forgotPassword}
+            element={<ForgotPasswordPage />}
+            handle={{
+              meta: { title: 'Forgot Password', breadcrumb: 'Forgot' } satisfies RouteMeta,
+            }}
+          />
         </Route>
       </Route>
       {/* Private Routes */}
       <Route element={<PrivateRoute />}>
         <Route element={<MainLayout />}>
-          <Route path={PATHS.dashboard} element={<DashboardPage />} />
+          <Route
+            path={PATHS.dashboard}
+            element={<DashboardPage />}
+            handle={{
+              meta: {
+                title: 'Dashboard',
+                breadcrumb: 'Home',
+                requiresAuth: true,
+              } satisfies RouteMeta,
+            }}
+          />
         </Route>
       </Route>
       {/* Fallback Route */}
-      <Route path="*" element={<NotFoundPage />} />,
+      <Route
+        path="*"
+        element={<NotFoundPage />}
+        handle={{
+          meta: { title: '404 Page NotFound', breadcrumb: '404 Page NotFound' } satisfies RouteMeta,
+        }}
+      />
+      ,
     </>,
   ),
 );
+
+export const usePageMeta = () => {
+  const matches = useMatches();
+
+  console.log(matches);
+  const current = matches[matches.length - 1];
+  const handle = current?.handle as RouteHandle | undefined;
+
+  return handle?.meta ?? {};
+};
 
 export function AppRouter() {
   return (

@@ -1,7 +1,19 @@
+import { useEffect } from 'react';
+
 import { GalleryVerticalEnd } from 'lucide-react';
 import { Outlet } from 'react-router';
 
+import { usePageMeta } from '@/routes/router';
+
 export function AuthLayout() {
+  const { title } = usePageMeta();
+
+  useEffect(() => {
+    if (title) {
+      document.title = `${title} | HelmetGuard`;
+    }
+  }, [title]);
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="bg-muted relative hidden lg:block">
