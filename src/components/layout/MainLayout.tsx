@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
+
 import { Outlet } from 'react-router';
 
 import { AppSidebar } from '@/components/app-sidebar';
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,9 +13,18 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { usePageMeta } from '@/routes/router';
 import { ModeToggle } from '../mode-toggle';
 
 export default function MainLayout() {
+  const { title } = usePageMeta();
+
+  useEffect(() => {
+    if (title) {
+      document.title = `${title} | HelmetGuard`;
+    }
+  }, [title]);
+
   return (
     <SidebarProvider>
       <AppSidebar />

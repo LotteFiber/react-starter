@@ -7,12 +7,15 @@ import { Toaster } from 'sonner';
 
 import { AppRouter } from './routes/router.tsx';
 import { ThemeProvider } from './components/theme-provider.tsx';
+import { AuthProvider } from './contexts/AuthContext'; // ✅ Import this
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <AppRouter />
-    </ThemeProvider>
-    <Toaster />
+    <AuthProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <AppRouter />
+      </ThemeProvider>
+      <Toaster />
+    </AuthProvider>
   </StrictMode>,
 );
