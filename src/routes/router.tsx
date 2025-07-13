@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from 'react-router';
 
@@ -17,19 +17,23 @@ const ForgotPasswordPage = lazy(() => import('@/pages/auth/ForgotPasswordPage'))
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
+// Route Guards
 import { PrivateRoute } from '@/components/router/PrivateRoute';
+import { PublicRoute } from '@/components/router/PublicRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      {/* Auth Routes */}
-      <Route element={<AuthLayout />}>
-        <Route path={PATHS.root} element={<SignInPage />} />
-        <Route path={PATHS.signIn} element={<SignInPage />} />
-        <Route path={PATHS.signUp} element={<SignUpPage />} />
-        <Route path={PATHS.forgotPassword} element={<ForgotPasswordPage />} />
+      {/* Public Routes */}
+      <Route element={<PublicRoute />}>
+        <Route element={<AuthLayout />}>
+          <Route path={PATHS.root} element={<SignInPage />} />
+          <Route path={PATHS.signIn} element={<SignInPage />} />
+          <Route path={PATHS.signUp} element={<SignUpPage />} />
+          <Route path={PATHS.forgotPassword} element={<ForgotPasswordPage />} />
+        </Route>
       </Route>
-      {/* App Routes */}
+      {/* Private Routes */}
       <Route element={<PrivateRoute />}>
         <Route element={<MainLayout />}>
           <Route path={PATHS.dashboard} element={<DashboardPage />} />
