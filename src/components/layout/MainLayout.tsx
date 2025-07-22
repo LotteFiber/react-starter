@@ -15,6 +15,7 @@ import {
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { usePageMeta } from '@/routes/router';
 import { ModeToggle } from '../mode-toggle';
+import ErrorBoundary from '../common/ErrorBoundary';
 
 export default function MainLayout() {
   const { title } = usePageMeta();
@@ -26,28 +27,30 @@ export default function MainLayout() {
   }, [title]);
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center px-4 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <SidebarTrigger className="-ml-1 mr-2" />
-          <div className="flex justify-between items-center w-full">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-            <ModeToggle />
-          </div>
-        </header>
-        {<Outlet />}
-      </SidebarInset>
-    </SidebarProvider>
+    <ErrorBoundary fallback={<div>Sidebar layout failed to load.</div>}>
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <header className="flex h-16 shrink-0 items-center px-4 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <SidebarTrigger className="-ml-1 mr-2" />
+            <div className="flex justify-between items-center w-full">
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+              <ModeToggle />
+            </div>
+          </header>
+          {<Outlet />}
+        </SidebarInset>
+      </SidebarProvider>
+    </ErrorBoundary>
   );
 }
