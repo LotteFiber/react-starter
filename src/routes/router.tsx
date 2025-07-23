@@ -96,7 +96,6 @@ const router = createBrowserRouter([
 export const usePageMeta = () => {
   const matches = useMatches();
 
-  console.log(matches);
   const current = matches[matches.length - 1];
   const handle = current?.handle as RouteHandle | undefined;
 
