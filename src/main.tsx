@@ -7,7 +7,7 @@ import { Toaster } from 'sonner';
 
 import { AppRouter } from './routes/router.tsx';
 import { ThemeProvider } from './components/theme-provider.tsx';
-import { AuthProvider } from './contexts/AuthContext'; // ✅ Import this
+import { AuthProvider } from './contexts/AuthContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

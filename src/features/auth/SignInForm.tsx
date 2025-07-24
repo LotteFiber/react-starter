@@ -27,7 +27,7 @@ export function SignInForm({ className, ...props }: React.ComponentProps<'form'>
       return;
     }
 
-    signin();
+    signin(email, password);
     toast.success('Successfully signed in!');
     navigate(PATHS.dashboard);
   };
