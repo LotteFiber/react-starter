@@ -2,11 +2,12 @@ import axios from 'axios';
 import { redirect } from 'react-router';
 
 import { PATHS } from '@/routes/path';
+import { API_BASE_URL, TIMEOUT } from '@/constants/appConfig';
 
 // Create the instance
 const api = axios.create({
-  baseURL: 'https://your-api-url.com/api',
-  timeout: 10000,
+  baseURL: API_BASE_URL,
+  timeout: TIMEOUT,
 });
 
 // Add a request interceptor
